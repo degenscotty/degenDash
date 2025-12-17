@@ -14,7 +14,9 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Home, LineChart, Settings, TrendingUp, Wallet } from "lucide-react";
+import { Home, LineChart, Settings, Wallet } from "lucide-react";
+import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -26,7 +28,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2 py-1">
-            <TrendingUp className="size-6" />
+            <Logo className="size-6" />
             <span className="font-bold text-lg">DegenDash</span>
           </div>
         </SidebarHeader>
@@ -64,6 +66,10 @@ export function AppLayout({ children }: AppLayoutProps) {
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
+          <div className="flex items-center justify-between px-2 py-1">
+            <span className="text-xs text-muted-foreground">Theme</span>
+            <ThemeToggle />
+          </div>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
