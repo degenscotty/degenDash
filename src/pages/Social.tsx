@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -22,7 +28,8 @@ const mockPosts = [
     id: "post-1",
     influencerHandle: "@kaduna",
     platform: "twitter" as const,
-    content: "Just aped into $AVICI 🚀 This one's gonna moon! Team is doxxed, liquidity locked. Don't fade this.",
+    content:
+      "Just aped into $AVICI 🚀 This one's gonna moon! Team is doxxed, liquidity locked. Don't fade this.",
     timestamp: Date.now() - 3600000 * 2,
     mentionedTokens: ["AVICI"],
   },
@@ -30,7 +37,8 @@ const mockPosts = [
     id: "post-2",
     influencerHandle: "@kaduna",
     platform: "twitter" as const,
-    content: "$BANANA looking juicy right now 🍌 Chart is perfect, volume coming in. This could be the next 100x",
+    content:
+      "$BANANA looking juicy right now 🍌 Chart is perfect, volume coming in. This could be the next 100x",
     timestamp: Date.now() - 3600000 * 5,
     mentionedTokens: ["BANANA"],
   },
@@ -46,15 +54,19 @@ const mockPosts = [
     id: "post-4",
     influencerHandle: "degen_calls",
     platform: "telegram" as const,
-    content: "🔥 NEW CALL 🔥\n\n$BANANA on Base\n\nMC: 500k\nLiquidity: Locked\nContract: Renounced\n\nThis is not financial advice. DYOR!",
+    content:
+      "🔥 NEW CALL 🔥\n\n$BANANA on Base\n\nMC: 500k\nLiquidity: Locked\nContract: Renounced\n\nThis is not financial advice. DYOR!",
     timestamp: Date.now() - 3600000 * 1,
     mentionedTokens: ["BANANA"],
   },
 ];
 
 export function Social() {
-  const { influencers, removeInfluencer, getInfluencersByPlatform } = useInfluencers();
-  const [selectedPlatform, setSelectedPlatform] = useState<"all" | "twitter" | "telegram">("all");
+  const { influencers, removeInfluencer, getInfluencersByPlatform } =
+    useInfluencers();
+  const [selectedPlatform, setSelectedPlatform] = useState<
+    "all" | "twitter" | "telegram"
+  >("all");
 
   const twitterInfluencers = getInfluencersByPlatform("twitter");
   const telegramChannels = getInfluencersByPlatform("telegram");
@@ -79,14 +91,12 @@ export function Social() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Social Scraping</CardTitle>
+              <CardTitle>Scraping</CardTitle>
               <CardDescription>
                 Track influencers and channels for alpha calls
               </CardDescription>
             </div>
-            <Badge variant="secondary">
-              {influencers.length} tracked
-            </Badge>
+            <Badge variant="secondary">{influencers.length} tracked</Badge>
           </div>
         </CardHeader>
         <CardContent>
@@ -131,7 +141,10 @@ export function Social() {
                         <TableCell>{influencer.displayName}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">
                           {influencer.lastScraped
-                            ? format(new Date(influencer.lastScraped), "MMM d, HH:mm")
+                            ? format(
+                                new Date(influencer.lastScraped),
+                                "MMM d, HH:mm"
+                              )
                             : "Never"}
                         </TableCell>
                         <TableCell>
@@ -147,7 +160,9 @@ export function Social() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              onClick={() => handleRemove(influencer.id, influencer.handle)}
+                              onClick={() =>
+                                handleRemove(influencer.id, influencer.handle)
+                              }
                               title="Remove"
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
@@ -190,7 +205,10 @@ export function Social() {
                         <TableCell>{channel.displayName}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">
                           {channel.lastScraped
-                            ? format(new Date(channel.lastScraped), "MMM d, HH:mm")
+                            ? format(
+                                new Date(channel.lastScraped),
+                                "MMM d, HH:mm"
+                              )
                             : "Never"}
                         </TableCell>
                         <TableCell>
@@ -206,7 +224,9 @@ export function Social() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              onClick={() => handleRemove(channel.id, channel.handle)}
+                              onClick={() =>
+                                handleRemove(channel.id, channel.handle)
+                              }
                               title="Remove"
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
@@ -226,10 +246,15 @@ export function Social() {
       <Card>
         <CardHeader>
           <CardTitle>Recent Alpha Calls</CardTitle>
-          <CardDescription>Latest mentions from tracked sources</CardDescription>
+          <CardDescription>
+            Latest mentions from tracked sources
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs value={selectedPlatform} onValueChange={(v: any) => setSelectedPlatform(v)}>
+          <Tabs
+            value={selectedPlatform}
+            onValueChange={(v: any) => setSelectedPlatform(v)}
+          >
             <TabsList>
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="twitter">
@@ -244,7 +269,10 @@ export function Social() {
 
             <div className="mt-4 space-y-3">
               {filteredPosts.map((post) => (
-                <div key={post.id} className="border rounded-lg p-4 hover:bg-accent/50 transition-colors">
+                <div
+                  key={post.id}
+                  className="border rounded-lg p-4 hover:bg-accent/50 transition-colors"
+                >
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0 mt-1">
                       {post.platform === "twitter" ? (
@@ -262,10 +290,16 @@ export function Social() {
                           {format(new Date(post.timestamp), "MMM d, HH:mm")}
                         </span>
                       </div>
-                      <p className="text-sm leading-relaxed whitespace-pre-line">{post.content}</p>
+                      <p className="text-sm leading-relaxed whitespace-pre-line">
+                        {post.content}
+                      </p>
                       <div className="flex gap-2">
                         {post.mentionedTokens.map((token) => (
-                          <Badge key={token} variant="secondary" className="font-mono">
+                          <Badge
+                            key={token}
+                            variant="secondary"
+                            className="font-mono"
+                          >
                             ${token}
                           </Badge>
                         ))}
@@ -281,4 +315,3 @@ export function Social() {
     </div>
   );
 }
-
