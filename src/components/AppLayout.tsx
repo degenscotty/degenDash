@@ -14,15 +14,46 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Home, LineChart, Settings, Wallet } from "lucide-react";
+import {
+  Home,
+  Search,
+  Star,
+  History as HistoryIcon,
+  Settings,
+  Radio,
+} from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { NavLink, useLocation } from "react-router-dom";
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
+const navItems = [
+  { to: "/", icon: Home, label: "Dashboard" },
+  { to: "/search", icon: Search, label: "Token Search" },
+  { to: "/social", icon: Radio, label: "Social Scraping" },
+  { to: "/watchlist", icon: Star, label: "Token Watchlist" },
+  { to: "/history", icon: HistoryIcon, label: "History" },
+];
+
 export function AppLayout({ children }: AppLayoutProps) {
+  const location = useLocation();
+
+  // Get page title from current route
+  const getPageTitle = () => {
+    if (location.pathname === "/") return "Dashboard";
+    if (location.pathname === "/search") return "Token Search";
+    if (location.pathname === "/social") return "Social Scraping";
+    if (location.pathname.startsWith("/analysis")) return "Token Analysis";
+    if (location.pathname.startsWith("/trade")) return "Trade";
+    if (location.pathname === "/watchlist") return "Token Watchlist";
+    if (location.pathname === "/history") return "Trade History";
+    if (location.pathname === "/settings") return "Settings";
+    return "DegenDash";
+  };
+
   return (
     <SidebarProvider>
       <Sidebar>
@@ -37,30 +68,19 @@ export function AppLayout({ children }: AppLayoutProps) {
             <SidebarGroupLabel>Navigation</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive>
-                    <a href="/">
-                      <Home />
-                      <span>Dashboard</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="/portfolio">
-                      <Wallet />
-                      <span>Portfolio</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="/analytics">
-                      <LineChart />
-                      <span>Analytics</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                {navItems.map((item) => (
+                  <SidebarMenuItem key={item.to}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={location.pathname === item.to}
+                    >
+                      <NavLink to={item.to}>
+                        <item.icon />
+                        <span>{item.label}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -72,11 +92,14 @@ export function AppLayout({ children }: AppLayoutProps) {
           </div>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/settings">
+              <SidebarMenuButton
+                asChild
+                isActive={location.pathname === "/settings"}
+              >
+                <NavLink to="/settings">
                   <Settings />
                   <span>Settings</span>
-                </a>
+                </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -87,7 +110,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <SidebarTrigger />
           <Separator orientation="vertical" className="h-6" />
           <div className="flex flex-1 items-center justify-between">
-            <h1 className="text-lg font-semibold">Dashboard</h1>
+            <h1 className="text-lg font-semibold">{getPageTitle()}</h1>
             <div className="flex items-center gap-2">
               {/* Additional header content can go here */}
             </div>
@@ -98,4 +121,3 @@ export function AppLayout({ children }: AppLayoutProps) {
     </SidebarProvider>
   );
 }
-
