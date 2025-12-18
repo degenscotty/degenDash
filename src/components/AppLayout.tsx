@@ -56,7 +56,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar variant="inset">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2 py-1">
             <Logo className="size-6" />
@@ -106,17 +106,17 @@ export function AppLayout({ children }: AppLayoutProps) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger />
-          <Separator orientation="vertical" className="h-6" />
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4 lg:px-6">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="h-6 mx-2" />
           <div className="flex flex-1 items-center justify-between">
-            <h1 className="text-lg font-semibold">{getPageTitle()}</h1>
+            <h1 className="text-base font-medium">{getPageTitle()}</h1>
             <div className="flex items-center gap-2">
               {/* Additional header content can go here */}
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4">{children}</main>
+        <main className="flex-1 p-4 md:p-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
